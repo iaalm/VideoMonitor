@@ -117,7 +117,7 @@ int main( int argc, char** argv )
 	  printf("%09.0lf %09.0lf ",sum1.val[0],sum2.val[0]);
 	  
 	  if(sum1.val[0] > 1000000 && sum2.val[0] > 1000000){
-	  	sprintf(filename,"snapshot/%d.jpg",count++);
+	  	sprintf(filename,"snapshot/%08d.jpg",count++);
 		cvSaveImage(filename,pFrame);
 		putchar('S');
 	  }
