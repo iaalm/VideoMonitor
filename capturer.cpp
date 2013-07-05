@@ -31,7 +31,7 @@ int main( int argc, char** argv )
  
   //创建窗口
   //cvNamedWindow("video", 1);
-  //cvNamedWindow("background",1);
+  cvNamedWindow("background",1);
   //cvNamedWindow("foreground",1);
   //使窗口有序排列
   //cvMoveWindow("video", 30, 0);
@@ -42,7 +42,7 @@ int main( int argc, char** argv )
  
   if( argc > 2 )
     {
-      fprintf(stderr, "Usage: bkgrd [video_file_name]\n");
+      fprintf(stderr, "Usage: %s [video_file_name]\n",argv[0]);
       return -1;
     }
  
@@ -125,7 +125,7 @@ int main( int argc, char** argv )
  
 	  //显示图像
 	  //cvShowImage("video", pFrame);
-	  //cvShowImage("background", pBkImg);
+	  cvShowImage("background", pBkImg);
 	  //cvShowImage("foreground", pFrImg);
  
 	  //如果有按键事件，则跳出循环
@@ -144,7 +144,7 @@ int main( int argc, char** argv )
  
   //销毁窗口
   //cvDestroyWindow("video");
-  //cvDestroyWindow("background");
+  cvDestroyWindow("background");
   //cvDestroyWindow("foreground");
  
   //释放图像和矩阵
@@ -157,6 +157,7 @@ int main( int argc, char** argv )
   cvReleaseMat(&pBkMat);
  
   cvReleaseCapture(&pCapture);
+  printf("%d / %d\n",count,nFrmNum);
  
   return 0;
 }
