@@ -5,13 +5,25 @@
  
  
 #include <stdio.h>
+#include <unistd.h>
+#include <signal.h>
  
 #include <cv.h>
 #include <cxcore.h>
 #include <highgui.h>
- 
+
+volatile int flag = 1;
+
+void SIGINT_hander(int i){
+	flag = 0;
+}
+void Ign(int i){
+	//puts("alarm");
+}
 int main( int argc, char** argv )
 {
+  signal(SIGINT,SIGINT_hander);
+  signal(SIGALRM,Ign);
   //声明IplImage指针
   IplImage* pFrame = NULL; 
   IplImage* pFrImg = NULL;
@@ -31,7 +43,7 @@ int main( int argc, char** argv )
  
   //创建窗口
   //cvNamedWindow("video", 1);
-  cvNamedWindow("background",1);
+  //cvNamedWindow("background",1);
   //cvNamedWindow("foreground",1);
   //使窗口有序排列
   //cvMoveWindow("video", 30, 0);
@@ -63,8 +75,10 @@ int main( int argc, char** argv )
       }
  
   //逐帧读取视频
-  while(pFrame = cvQueryFrame( pCapture ))
+  while(flag)
     {
+	    ualarm(250000,500000);
+	    pFrame = cvQueryFrame( pCapture );
       nFrmNum++;
  
       //如果是第一帧，需要申请内存，并初始化
@@ -125,14 +139,17 @@ int main( int argc, char** argv )
  
 	  //显示图像
 	  //cvShowImage("video", pFrame);
-	  cvShowImage("background", pBkImg);
+	  //cvShowImage("background", pBkImg);
 	  //cvShowImage("foreground", pFrImg);
  
 	  //如果有按键事件，则跳出循环
 	  //此等待也为cvShowImage函数提供时间完成显示
 	  //等待时间可以根据CPU速度调整
+	  /*
 	  if( cvWaitKey(200) >= 0 )
 	    break;
+	    */
+	  pause();
  
  
 	}
@@ -144,7 +161,7 @@ int main( int argc, char** argv )
  
   //销毁窗口
   //cvDestroyWindow("video");
-  cvDestroyWindow("background");
+  //cvDestroyWindow("background");
   //cvDestroyWindow("foreground");
  
   //释放图像和矩阵
