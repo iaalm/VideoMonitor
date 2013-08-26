@@ -17,13 +17,10 @@ volatile int flag = 1;
 void SIGINT_hander(int i){
 	flag = 0;
 }
-void Ign(int i){
-	//puts("alarm");
-}
 int main( int argc, char** argv )
 {
   signal(SIGINT,SIGINT_hander);
-  signal(SIGALRM,Ign);
+  signal(SIGALRM,SIG_IGN);
   //声明IplImage指针
   IplImage* pFrame = NULL; 
   IplImage* pFrImg = NULL;
